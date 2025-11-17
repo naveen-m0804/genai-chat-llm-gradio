@@ -30,8 +30,35 @@ Building a user-friendly application that allows seamless interaction with a lar
 - Optionally deploy it to the cloud for broader accessibility.
 
 ### PROGRAM:
+```py
+import os
+import io
+import IPython.display
+from PIL import Image
+import base64 
+import requests 
+requests.adapters.DEFAULT_TIMEOUT = 60
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv()) # read local .env file
+hf_api_key = os.environ['HF_API_KEY']
+import gradio as gr
+def generate(input, slider):
+    output = client.generate(input, max_new_tokens=slider).generated_text
+    return output
 
+demo = gr.Interface(fn=generate, 
+                    inputs=[gr.Textbox(label="Prompt"), 
+                            gr.Slider(label="Max new tokens", 
+                                      value=20,  
+                                      maximum=1024, 
+                                      minimum=1)], 
+                    outputs=[gr.Textbox(label="Completion")])
+
+gr.close_all()
+demo.launch(share=True)
+```
 ### OUTPUT:
+<img width="1919" height="863" alt="image" src="https://github.com/user-attachments/assets/1ec93067-14fb-416d-8569-ee5e4a41252f" />
 
 ### RESULT:
 The "Chat with LLM" application was successfully designed and deployed using the Gradio Blocks framework, allowing seamless user interaction with a large language model.
